@@ -1,7 +1,7 @@
 ---
 AWSTemplateFormatVersion: 2010-09-09
 
-Description: Stack to deploy a highly available, elastic, scalable Moodle environment. This master stack launches multiple nested stacks for different tiers. !! This can only be run in certain AWS Regions - 'us-east-1', 'us-east-2', 'us-west-2', 'eu-west-1'.
+Description: Stack to deploy a highly available, elastic, scalable Moodle environment. This master stack launches multiple nested stacks for different tiers. !! This can only be run in certain AWS Regions - 'us-east-1', 'us-east-2', 'us-west-2', 'eu-west-1', 'ap-south-1'.
 
 
 
@@ -16,6 +16,7 @@ Metadata:
         - HostedZoneName
         - DomainName
         - UseRoute53Boolean
+        - LatestAmiId
     - Label:
         default: Network
       Parameters:
@@ -83,6 +84,8 @@ Metadata:
       Parameters:
         - MoodleLocale
     ParameterLabels:
+      LatestAmiId:
+        default: Latest AMI Id
       BastionInstanceType:
         default: Bastion Instance Type
       CloudFrontAcmCertificate:
@@ -195,10 +198,20 @@ Parameters:
     - t2.large 
     - t2.xlarge 
     - t2.2xlarge 
-    - m3.medium 
-    - m3.large 
-    - m3.xlarge 
-    - m3.2xlarge 
+    - t3.nano 
+    - t3.micro 
+    - t3.small 
+    - t3.medium 
+    - t3.large 
+    - t3.xlarge 
+    - t3.2xlarge 
+    - t4g.nano 
+    - t4g.micro 
+    - t4g.small 
+    - t4g.medium 
+    - t4g.large 
+    - t4g.xlarge 
+    - t4g.2xlarge 
     - m4.large 
     - m4.xlarge 
     - m4.2xlarge 
@@ -211,11 +224,12 @@ Parameters:
     - m5.4xlarge 
     - m5.12xlarge 
     - m5.24xlarge 
-    - c3.large 
-    - c3.xlarge 
-    - c3.2xlarge 
-    - c3.4xlarge 
-    - c3.8xlarge 
+    - m6g.large 
+    - m6g.xlarge 
+    - m6g.2xlarge 
+    - m6g.4xlarge 
+    - m6g.12xlarge 
+    - m6g.24xlarge 
     - c4.large 
     - c4.xlarge 
     - c4.2xlarge 
@@ -227,11 +241,12 @@ Parameters:
     - c5.4xlarge 
     - c5.9xlarge 
     - c5.18xlarge
-    - r3.large 
-    - r3.xlarge 
-    - r3.2xlarge 
-    - r3.4xlarge 
-    - r3.8xlarge 
+    - c6g.large 
+    - c6g.xlarge 
+    - c6g.2xlarge 
+    - c6g.4xlarge 
+    - c6g.12xlarge 
+    - c6g.24xlarge 
     - r4.large 
     - r4.xlarge 
     - r4.2xlarge 
@@ -278,7 +293,7 @@ Parameters:
     - p3.8xlarge 
     - p3.16xlarge
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t2.nano
+    Default: t3.nano
     Description: Bastion EC2 instance type.
     Type: String
   PublicAlbAcmCertificate:
@@ -296,7 +311,7 @@ Parameters:
     AllowedValues:
       - true
       - false
-    Default: true
+    Default: false
     Description: Indicates whether the DB instances in the cluster are encrypted.
     Type: String
   DatabaseInstanceType:
@@ -307,8 +322,22 @@ Parameters:
       - db.r4.4xlarge
       - db.r4.8xlarge
       - db.r4.16xlarge
+      - db.r5.large
+      - db.r5.xlarge
+      - db.r5.2xlarge
+      - db.r5.4xlarge
+      - db.r5.8xlarge
+      - db.r5.16xlarge
+      - db.r6g.large
+      - db.r6g.xlarge
+      - db.r6g.2xlarge
+      - db.r6g.4xlarge
+      - db.r6g.8xlarge
+      - db.r6g.16xlarge
+      - db.t3.medium
+      - db.t3.large
     ConstraintDescription: Must be a valid RDS instance class.
-    Default: db.r4.large
+    Default: db.t3.medium
     Description: The Amazon RDS database instance class.
     Type: String
   DatabaseMasterUsername:
@@ -336,7 +365,7 @@ Parameters:
     AllowedValues:
       - true
       - false
-    Default: true
+    Default: false
     Description: Create an encrypted Amazon EFS file system.
     Type: String
   EfsCmk:
@@ -360,6 +389,13 @@ Parameters:
     Type: Number
   EfsGrowthInstanceType:
     AllowedValues:
+    - t3.nano 
+    - t3.micro 
+    - t3.small 
+    - t3.medium 
+    - t3.large 
+    - t3.xlarge 
+    - t3.2xlarge 
     - t2.nano 
     - t2.micro 
     - t2.small 
@@ -367,10 +403,13 @@ Parameters:
     - t2.large 
     - t2.xlarge 
     - t2.2xlarge 
-    - m3.medium 
-    - m3.large 
-    - m3.xlarge 
-    - m3.2xlarge 
+    - t4g.nano 
+    - t4g.micro 
+    - t4g.small 
+    - t4g.medium 
+    - t4g.large 
+    - t4g.xlarge 
+    - t4g.2xlarge 
     - m4.large 
     - m4.xlarge 
     - m4.2xlarge 
@@ -383,11 +422,11 @@ Parameters:
     - m5.4xlarge 
     - m5.12xlarge 
     - m5.24xlarge 
-    - c3.large 
-    - c3.xlarge 
-    - c3.2xlarge 
-    - c3.4xlarge 
-    - c3.8xlarge 
+    - m6g.large 
+    - m6g.xlarge 
+    - m6g.2xlarge 
+    - m6g.4xlarge 
+    - m6g.12xlarge 
     - c4.large 
     - c4.xlarge 
     - c4.2xlarge 
@@ -399,17 +438,24 @@ Parameters:
     - c5.4xlarge 
     - c5.9xlarge 
     - c5.18xlarge
-    - r3.large 
-    - r3.xlarge 
-    - r3.2xlarge 
-    - r3.4xlarge 
-    - r3.8xlarge 
+    - c6g.large 
+    - c6g.xlarge 
+    - c6g.2xlarge 
+    - c6g.4xlarge 
     - r4.large 
     - r4.xlarge 
     - r4.2xlarge 
     - r4.4xlarge 
     - r4.8xlarge 
     - r4.16xlarge 
+    - r5.large 
+    - r5.xlarge 
+    - r5.2xlarge 
+    - r5.4xlarge 
+    - r6g.large 
+    - r6g.xlarge 
+    - r6g.2xlarge 
+    - r6g.4xlarge 
     - x1.16xlarge 
     - x1.32xlarge 
     - x1e.xlarge 
@@ -450,7 +496,7 @@ Parameters:
     - p3.8xlarge 
     - p3.16xlarge
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: r4.large
+    Default: t3.medium
     Description: The Amazon EC2 instance type that adds data to the file system.
     Type: String
   UseSessionCacheBoolean:
@@ -465,29 +511,42 @@ Parameters:
       - cache.t2.micro
       - cache.t2.small
       - cache.t2.medium
+      - cache.t3.micro
+      - cache.t3.small
+      - cache.t3.medium
       - cache.m4.large
       - cache.m4.xlarge
       - cache.m4.2xlarge
       - cache.m4.4xlarge
       - cache.m4.10xlarge
-      - cache.m3.medium
-      - cache.m3.large
-      - cache.m3.xlarge
-      - cache.m3.2xlarge
-      - cache.r3.large
-      - cache.r3.xlarge
-      - cache.r3.2xlarge
-      - cache.r3.4xlarge
-      - cache.r3.8xlarge
+      - cache.m5.large
+      - cache.m5.xlarge
+      - cache.m5.2xlarge
+      - cache.m5.4xlarge
+      - cache.m5.10xlarge
+      - cache.m6g.large
+      - cache.m6g.xlarge
+      - cache.m6g.2xlarge
+      - cache.m6g.4xlarge
+      - cache.r5.large
+      - cache.r5.xlarge
+      - cache.r5.2xlarge
+      - cache.r5.4xlarge
+      - cache.r5.8xlarge
+      - cache.r6g.large
+      - cache.r6g.xlarge
+      - cache.r6g.2xlarge
+      - cache.r6g.4xlarge
+      - cache.r6g.8xlarge
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
-    Default: cache.t2.micro
+    Default: cache.t3.micro
     Description: The Amazon ElastiCache cluster node type.
     Type: String
   UseApplicationCacheBoolean:
     AllowedValues:
       - true
       - false
-    Default: true
+    Default: false
     Description: Specifies whether an ElastiCache Cache Cluster should be created to cache application content.
     Type: String
   ApplicationCacheNodeType:
@@ -495,24 +554,45 @@ Parameters:
       - cache.t2.micro
       - cache.t2.small
       - cache.t2.medium
+      - cache.t3.micro
+      - cache.t3.small
+      - cache.t3.medium
       - cache.m4.large
       - cache.m4.xlarge
       - cache.m4.2xlarge
       - cache.m4.4xlarge
       - cache.m4.10xlarge
-      - cache.m3.medium
-      - cache.m3.large
-      - cache.m3.xlarge
-      - cache.m3.2xlarge
-      - cache.r3.large
-      - cache.r3.xlarge
-      - cache.r3.2xlarge
-      - cache.r3.4xlarge
-      - cache.r3.8xlarge
+      - cache.m5.large
+      - cache.m5.xlarge
+      - cache.m5.2xlarge
+      - cache.m5.4xlarge
+      - cache.m5.10xlarge
+      - cache.m6g.large
+      - cache.m6g.xlarge
+      - cache.m6g.2xlarge
+      - cache.m6g.4xlarge
+      - cache.r5.large
+      - cache.r5.xlarge
+      - cache.r5.2xlarge
+      - cache.r5.4xlarge
+      - cache.r5.8xlarge
+      - cache.r6g.large
+      - cache.r6g.xlarge
+      - cache.r6g.2xlarge
+      - cache.r6g.4xlarge
+      - cache.r6g.8xlarge
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
-    Default: cache.t2.micro
+    Default: cache.t3.micro
     Description: The Amazon ElastiCache cluster node type.
     Type: String
+  LatestAmiId:
+    ConstraintDescription: Must be valid AMI Id
+    Description: Select the type of AMI depending upon Intel/AMD x86 architecture or Graviton2 AMR architecture
+    Type: String
+    AllowedValues:
+      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-arm64-gp2
+    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
   EC2KeyName:
     ConstraintDescription: Must be letters (upper or lower), numbers, and special characters.
     Description: Name of an EC2 KeyPair. Your bastion & Web instances will launch with this KeyPair.
@@ -536,6 +616,13 @@ Parameters:
     Type: String
   WebInstanceType:
     AllowedValues:
+      - t3.nano 
+      - t3.micro 
+      - t3.small 
+      - t3.medium 
+      - t3.large 
+      - t3.xlarge 
+      - t3.2xlarge 
       - t2.nano 
       - t2.micro 
       - t2.small 
@@ -543,10 +630,13 @@ Parameters:
       - t2.large 
       - t2.xlarge 
       - t2.2xlarge 
-      - m3.medium 
-      - m3.large 
-      - m3.xlarge 
-      - m3.2xlarge 
+      - t4g.nano 
+      - t4g.micro 
+      - t4g.small 
+      - t4g.medium 
+      - t4g.large 
+      - t4g.xlarge 
+      - t4g.2xlarge 
       - m4.large 
       - m4.xlarge 
       - m4.2xlarge 
@@ -559,11 +649,11 @@ Parameters:
       - m5.4xlarge 
       - m5.12xlarge 
       - m5.24xlarge 
-      - c3.large 
-      - c3.xlarge 
-      - c3.2xlarge 
-      - c3.4xlarge 
-      - c3.8xlarge 
+      - m6g.large 
+      - m6g.xlarge 
+      - m6g.2xlarge 
+      - m6g.4xlarge 
+      - m6g.12xlarge 
       - c4.large 
       - c4.xlarge 
       - c4.2xlarge 
@@ -575,17 +665,24 @@ Parameters:
       - c5.4xlarge 
       - c5.9xlarge 
       - c5.18xlarge
-      - r3.large 
-      - r3.xlarge 
-      - r3.2xlarge 
-      - r3.4xlarge 
-      - r3.8xlarge 
+      - c6g.large 
+      - c6g.xlarge 
+      - c6g.2xlarge 
+      - c6g.4xlarge 
       - r4.large 
       - r4.xlarge 
       - r4.2xlarge 
       - r4.4xlarge 
       - r4.8xlarge 
       - r4.16xlarge 
+      - r5.large 
+      - r5.xlarge 
+      - r5.2xlarge 
+      - r5.4xlarge 
+      - r6g.large 
+      - r6g.xlarge 
+      - r6g.2xlarge 
+      - r6g.4xlarge 
       - x1.16xlarge 
       - x1.32xlarge 
       - x1e.xlarge 
@@ -626,7 +723,7 @@ Parameters:
       - p3.8xlarge 
       - p3.16xlarge
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t2.large
+    Default: t3.medium
     Description: The Amazon EC2 instance type for your web instances.
     Type: String
   HostedZoneName:
@@ -781,14 +878,14 @@ Parameters:
     AllowedValues:
       - true
       - false
-    Default: true
+    Default: false
     Description: Specifies whether a CloudFront Distribution should be created to serve the Moodle website content.
     Type: String
   UseRoute53Boolean:
     AllowedValues:
       - true
       - false
-    Default: true
+    Default: false
     Description: Specifies whether a record set should be created in Route 53 for your Moodle domain name.
     Type: String
 
@@ -865,7 +962,7 @@ Resources:
           !Ref DataSubnet4Cidr
         DataSubnet5Cidr:
           !Ref DataSubnet5Cidr
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/01-newvpc.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/01-newvpc.yaml
   securitygroups:
     DependsOn: vpc
     Type: AWS::CloudFormation::Stack
@@ -875,7 +972,7 @@ Resources:
           !Ref SshAccessCidr
         Vpc:
           !GetAtt [ vpc, Outputs.Vpc ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/02-securitygroups.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/02-securitygroups.yaml
   bastion:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -891,7 +988,7 @@ Resources:
           !Ref NumberOfAZs
         Subnet:
           !GetAtt [ vpc, Outputs.PublicSubnet ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-bastion.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-bastion.yaml
   publicalb:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -907,7 +1004,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.PublicAlbSecurityGroup ]
         Vpc:
           !GetAtt [ vpc, Outputs.Vpc ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-publicalb.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-publicalb.yaml
   rds:
     DependsOn: [ securitygroups ]
     Type: AWS::CloudFormation::Stack
@@ -931,7 +1028,7 @@ Resources:
           !GetAtt [ vpc, Outputs.DataSubnet ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-rds.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-rds.yaml
   efsfilesystem:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -955,7 +1052,7 @@ Resources:
           !Ref EfsPerformanceMode
         Subnet:
           !GetAtt [ vpc, Outputs.DataSubnet ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-efsfilesystem.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-efsfilesystem.yaml
   sessioncache:
     Condition: DeployWithSessionCache
     DependsOn: securitygroups
@@ -972,7 +1069,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-elasticache.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-elasticache.yaml
   applicationcache:
     Condition: DeployApplicationCache
     DependsOn: securitygroups
@@ -989,7 +1086,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/03-elasticache.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-elasticache.yaml
   webnocache:
     DependsOn: [ publicalb, rds, efsfilesystem ]
     Condition: DeployWithoutSessionCache
@@ -1032,7 +1129,7 @@ Resources:
           !Ref MoodleLocale
         ElastiCacheClusterEndpointAddress:
           ''
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/04-web.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/04-web.yaml
   webcached:
     DependsOn: [ publicalb, rds, efsfilesystem, sessioncache ]
     Condition: DeployWithSessionCache
@@ -1075,7 +1172,7 @@ Resources:
           !Ref MoodleLocale
         ElastiCacheClusterEndpointAddress:
           !GetAtt sessioncache.Outputs.ElastiCacheClusterEndpointAddress
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/04-web.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/04-web.yaml
   cloudfront:
     Condition: DeployCloudFront
     DependsOn: publicalb    
@@ -1088,7 +1185,7 @@ Resources:
           !GetAtt [ publicalb, Outputs.PublicAlbDnsName ]
         DomainName:
           !Ref DomainName
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/04-cloudfront.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/04-cloudfront.yaml
   route53:
     Condition: DeployRoute53
     DependsOn: publicalb
@@ -1103,7 +1200,7 @@ Resources:
           !Ref HostedZoneName
         DomainName:
           !Ref DomainName
-      TemplateURL: https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/05-route53.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/05-route53.yaml
       
 Outputs:
   DnsName:

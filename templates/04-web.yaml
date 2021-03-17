@@ -156,6 +156,13 @@ Parameters:
     Type: String
   WebInstanceType:
     AllowedValues:
+    - t3.nano 
+    - t3.micro 
+    - t3.small 
+    - t3.medium 
+    - t3.large 
+    - t3.xlarge 
+    - t3.2xlarge 
     - t2.nano 
     - t2.micro 
     - t2.small 
@@ -163,10 +170,13 @@ Parameters:
     - t2.large 
     - t2.xlarge 
     - t2.2xlarge 
-    - m3.medium 
-    - m3.large 
-    - m3.xlarge 
-    - m3.2xlarge 
+    - t4g.nano 
+    - t4g.micro 
+    - t4g.small 
+    - t4g.medium 
+    - t4g.large 
+    - t4g.xlarge 
+    - t4g.2xlarge 
     - m4.large 
     - m4.xlarge 
     - m4.2xlarge 
@@ -179,11 +189,11 @@ Parameters:
     - m5.4xlarge 
     - m5.12xlarge 
     - m5.24xlarge 
-    - c3.large 
-    - c3.xlarge 
-    - c3.2xlarge 
-    - c3.4xlarge 
-    - c3.8xlarge 
+    - m6g.large 
+    - m6g.xlarge 
+    - m6g.2xlarge 
+    - m6g.4xlarge 
+    - m6g.12xlarge 
     - c4.large 
     - c4.xlarge 
     - c4.2xlarge 
@@ -195,17 +205,24 @@ Parameters:
     - c5.4xlarge 
     - c5.9xlarge 
     - c5.18xlarge
-    - r3.large 
-    - r3.xlarge 
-    - r3.2xlarge 
-    - r3.4xlarge 
-    - r3.8xlarge 
+    - c6g.large 
+    - c6g.xlarge 
+    - c6g.2xlarge 
+    - c6g.4xlarge 
     - r4.large 
     - r4.xlarge 
     - r4.2xlarge 
     - r4.4xlarge 
     - r4.8xlarge 
     - r4.16xlarge 
+    - r5.large 
+    - r5.xlarge 
+    - r5.2xlarge 
+    - r5.4xlarge 
+    - r6g.large 
+    - r6g.xlarge 
+    - r6g.2xlarge 
+    - r6g.4xlarge 
     - x1.16xlarge 
     - x1.32xlarge 
     - x1e.xlarge 
@@ -246,7 +263,7 @@ Parameters:
     - p3.8xlarge 
     - p3.16xlarge
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t2.large
+    Default: t3.medium
     Description: The Amazon EC2 instance type for your web instances.
     Type: String
   WebSecurityGroup:
@@ -262,7 +279,7 @@ Parameters:
     Default: en
   LatestAmiId :
     Type : AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-arm64-gp2
 
 
 Conditions:
@@ -477,7 +494,7 @@ Resources:
             /tmp/create_site_conf.sh:
               content: !Sub |
                 #!/bin/bash -xe
-                amazon-linux-extras install -y php7.3 postgresql9.6 
+                amazon-linux-extras install -y php7.3 postgresql11
                 yum install -y awslogs httpd php-pgsql php-gd php-soap php-intl php-mbstring php-xmlrpc php-zip
                 sed -i 's/memory_limit =.*/memory_limit = 2048M/' /etc/php.ini
                 if [ ! -f /etc/httpd/conf.d/moodle.conf ]; then                    
