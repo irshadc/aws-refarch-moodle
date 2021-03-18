@@ -205,13 +205,6 @@ Parameters:
     - t3.large 
     - t3.xlarge 
     - t3.2xlarge 
-    - t4g.nano 
-    - t4g.micro 
-    - t4g.small 
-    - t4g.medium 
-    - t4g.large 
-    - t4g.xlarge 
-    - t4g.2xlarge 
     - m4.large 
     - m4.xlarge 
     - m4.2xlarge 
@@ -224,12 +217,6 @@ Parameters:
     - m5.4xlarge 
     - m5.12xlarge 
     - m5.24xlarge 
-    - m6g.large 
-    - m6g.xlarge 
-    - m6g.2xlarge 
-    - m6g.4xlarge 
-    - m6g.12xlarge 
-    - m6g.24xlarge 
     - c4.large 
     - c4.xlarge 
     - c4.2xlarge 
@@ -239,59 +226,19 @@ Parameters:
     - c5.xlarge 
     - c5.2xlarge 
     - c5.4xlarge 
-    - c5.9xlarge 
-    - c5.18xlarge
-    - c6g.large 
-    - c6g.xlarge 
-    - c6g.2xlarge 
-    - c6g.4xlarge 
-    - c6g.12xlarge 
-    - c6g.24xlarge 
+    - c5.8xlarge
     - r4.large 
     - r4.xlarge 
     - r4.2xlarge 
     - r4.4xlarge 
     - r4.8xlarge 
     - r4.16xlarge 
-    - x1.16xlarge 
-    - x1.32xlarge 
-    - x1e.xlarge 
-    - x1e.2xlarge 
-    - x1e.4xlarge 
-    - x1e.8xlarge 
-    - x1e.16xlarge 
-    - x1e.32xlarge
-    - d2.xlarge 
-    - d2.2xlarge 
-    - d2.4xlarge 
-    - d2.8xlarge 
-    - h1.2xlarge 
-    - h1.4xlarge 
-    - h1.8xlarge 
-    - h1.16xlarge 
-    - i2.xlarge 
-    - i2.2xlarge 
-    - i2.4xlarge 
-    - i2.8xlarge 
-    - i3.large 
-    - i3.xlarge 
-    - i3.2xlarge 
-    - i3.4xlarge 
-    - i3.8xlarge 
-    - i3.16xlarge
-    - f1.2xlarge 
-    - f1.16xlarge 
-    - g2.2xlarge 
-    - g2.8xlarge 
-    - g3.4xlarge 
-    - g3.8xlarge 
-    - g3.16xlarge 
-    - p2.xlarge 
-    - p2.8xlarge 
-    - p2.16xlarge 
-    - p3.2xlarge 
-    - p3.8xlarge 
-    - p3.16xlarge
+    - r5.large 
+    - r5.xlarge 
+    - r5.2xlarge 
+    - r5.4xlarge 
+    - r5.8xlarge 
+    - r5.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t3.nano
     Description: Bastion EC2 instance type.
@@ -328,12 +275,6 @@ Parameters:
       - db.r5.4xlarge
       - db.r5.8xlarge
       - db.r5.16xlarge
-      - db.r6g.large
-      - db.r6g.xlarge
-      - db.r6g.2xlarge
-      - db.r6g.4xlarge
-      - db.r6g.8xlarge
-      - db.r6g.16xlarge
       - db.t3.medium
       - db.t3.large
     ConstraintDescription: Must be a valid RDS instance class.
@@ -389,13 +330,6 @@ Parameters:
     Type: Number
   EfsGrowthInstanceType:
     AllowedValues:
-    - t3.nano 
-    - t3.micro 
-    - t3.small 
-    - t3.medium 
-    - t3.large 
-    - t3.xlarge 
-    - t3.2xlarge 
     - t2.nano 
     - t2.micro 
     - t2.small 
@@ -403,13 +337,13 @@ Parameters:
     - t2.large 
     - t2.xlarge 
     - t2.2xlarge 
-    - t4g.nano 
-    - t4g.micro 
-    - t4g.small 
-    - t4g.medium 
-    - t4g.large 
-    - t4g.xlarge 
-    - t4g.2xlarge 
+    - t3.nano 
+    - t3.micro 
+    - t3.small 
+    - t3.medium 
+    - t3.large 
+    - t3.xlarge 
+    - t3.2xlarge 
     - m4.large 
     - m4.xlarge 
     - m4.2xlarge 
@@ -422,11 +356,6 @@ Parameters:
     - m5.4xlarge 
     - m5.12xlarge 
     - m5.24xlarge 
-    - m6g.large 
-    - m6g.xlarge 
-    - m6g.2xlarge 
-    - m6g.4xlarge 
-    - m6g.12xlarge 
     - c4.large 
     - c4.xlarge 
     - c4.2xlarge 
@@ -436,12 +365,7 @@ Parameters:
     - c5.xlarge 
     - c5.2xlarge 
     - c5.4xlarge 
-    - c5.9xlarge 
-    - c5.18xlarge
-    - c6g.large 
-    - c6g.xlarge 
-    - c6g.2xlarge 
-    - c6g.4xlarge 
+    - c5.8xlarge
     - r4.large 
     - r4.xlarge 
     - r4.2xlarge 
@@ -452,49 +376,8 @@ Parameters:
     - r5.xlarge 
     - r5.2xlarge 
     - r5.4xlarge 
-    - r6g.large 
-    - r6g.xlarge 
-    - r6g.2xlarge 
-    - r6g.4xlarge 
-    - x1.16xlarge 
-    - x1.32xlarge 
-    - x1e.xlarge 
-    - x1e.2xlarge 
-    - x1e.4xlarge 
-    - x1e.8xlarge 
-    - x1e.16xlarge 
-    - x1e.32xlarge
-    - d2.xlarge 
-    - d2.2xlarge 
-    - d2.4xlarge 
-    - d2.8xlarge 
-    - h1.2xlarge 
-    - h1.4xlarge 
-    - h1.8xlarge 
-    - h1.16xlarge 
-    - i2.xlarge 
-    - i2.2xlarge 
-    - i2.4xlarge 
-    - i2.8xlarge 
-    - i3.large 
-    - i3.xlarge 
-    - i3.2xlarge 
-    - i3.4xlarge 
-    - i3.8xlarge 
-    - i3.16xlarge
-    - f1.2xlarge 
-    - f1.16xlarge 
-    - g2.2xlarge 
-    - g2.8xlarge 
-    - g3.4xlarge 
-    - g3.8xlarge 
-    - g3.16xlarge 
-    - p2.xlarge 
-    - p2.8xlarge 
-    - p2.16xlarge 
-    - p3.2xlarge 
-    - p3.8xlarge 
-    - p3.16xlarge
+    - r5.8xlarge 
+    - r5.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t3.medium
     Description: The Amazon EC2 instance type that adds data to the file system.
@@ -524,20 +407,11 @@ Parameters:
       - cache.m5.2xlarge
       - cache.m5.4xlarge
       - cache.m5.10xlarge
-      - cache.m6g.large
-      - cache.m6g.xlarge
-      - cache.m6g.2xlarge
-      - cache.m6g.4xlarge
       - cache.r5.large
       - cache.r5.xlarge
       - cache.r5.2xlarge
       - cache.r5.4xlarge
       - cache.r5.8xlarge
-      - cache.r6g.large
-      - cache.r6g.xlarge
-      - cache.r6g.2xlarge
-      - cache.r6g.4xlarge
-      - cache.r6g.8xlarge
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
     Default: cache.t3.micro
     Description: The Amazon ElastiCache cluster node type.
@@ -567,32 +441,15 @@ Parameters:
       - cache.m5.2xlarge
       - cache.m5.4xlarge
       - cache.m5.10xlarge
-      - cache.m6g.large
-      - cache.m6g.xlarge
-      - cache.m6g.2xlarge
-      - cache.m6g.4xlarge
       - cache.r5.large
       - cache.r5.xlarge
       - cache.r5.2xlarge
       - cache.r5.4xlarge
       - cache.r5.8xlarge
-      - cache.r6g.large
-      - cache.r6g.xlarge
-      - cache.r6g.2xlarge
-      - cache.r6g.4xlarge
-      - cache.r6g.8xlarge
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
     Default: cache.t3.micro
     Description: The Amazon ElastiCache cluster node type.
     Type: String
-  LatestAmiId:
-    ConstraintDescription: Must be valid AMI Id
-    Description: Select the type of AMI depending upon Intel/AMD x86 architecture or Graviton2 AMR architecture
-    Type: String
-    AllowedValues:
-      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
-      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-arm64-gp2
-    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
   EC2KeyName:
     ConstraintDescription: Must be letters (upper or lower), numbers, and special characters.
     Description: Name of an EC2 KeyPair. Your bastion & Web instances will launch with this KeyPair.
@@ -616,13 +473,6 @@ Parameters:
     Type: String
   WebInstanceType:
     AllowedValues:
-      - t3.nano 
-      - t3.micro 
-      - t3.small 
-      - t3.medium 
-      - t3.large 
-      - t3.xlarge 
-      - t3.2xlarge 
       - t2.nano 
       - t2.micro 
       - t2.small 
@@ -630,13 +480,13 @@ Parameters:
       - t2.large 
       - t2.xlarge 
       - t2.2xlarge 
-      - t4g.nano 
-      - t4g.micro 
-      - t4g.small 
-      - t4g.medium 
-      - t4g.large 
-      - t4g.xlarge 
-      - t4g.2xlarge 
+      - t3.nano 
+      - t3.micro 
+      - t3.small 
+      - t3.medium 
+      - t3.large 
+      - t3.xlarge 
+      - t3.2xlarge 
       - m4.large 
       - m4.xlarge 
       - m4.2xlarge 
@@ -649,11 +499,6 @@ Parameters:
       - m5.4xlarge 
       - m5.12xlarge 
       - m5.24xlarge 
-      - m6g.large 
-      - m6g.xlarge 
-      - m6g.2xlarge 
-      - m6g.4xlarge 
-      - m6g.12xlarge 
       - c4.large 
       - c4.xlarge 
       - c4.2xlarge 
@@ -663,12 +508,7 @@ Parameters:
       - c5.xlarge 
       - c5.2xlarge 
       - c5.4xlarge 
-      - c5.9xlarge 
-      - c5.18xlarge
-      - c6g.large 
-      - c6g.xlarge 
-      - c6g.2xlarge 
-      - c6g.4xlarge 
+      - c5.8xlarge
       - r4.large 
       - r4.xlarge 
       - r4.2xlarge 
@@ -679,10 +519,8 @@ Parameters:
       - r5.xlarge 
       - r5.2xlarge 
       - r5.4xlarge 
-      - r6g.large 
-      - r6g.xlarge 
-      - r6g.2xlarge 
-      - r6g.4xlarge 
+      - r5.8xlarge 
+      - r5.16xlarge 
       - x1.16xlarge 
       - x1.32xlarge 
       - x1e.xlarge 
