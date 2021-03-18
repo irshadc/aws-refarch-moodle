@@ -110,7 +110,7 @@ Parameters:
       - r5.8xlarge 
       - r5.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t3.medium
+    Default: t3.micro
     Description: The Amazon EC2 instance type that adds data to the file system.
     Type: String
   EC2KeyName:
