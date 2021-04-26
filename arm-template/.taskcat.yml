@@ -1,0 +1,8 @@
+project:
+  name: my-moodle-ref-project
+  regions:
+  - us-east-1
+  - ap-south-1
+tests:
+  default:
+    template: ./00-master.yaml
