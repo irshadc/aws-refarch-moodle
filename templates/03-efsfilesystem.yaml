@@ -109,6 +109,25 @@ Parameters:
       - r5.4xlarge 
       - r5.8xlarge 
       - r5.16xlarge 
+      - t4g.nano 
+      - t4g.medium 
+      - t4g.micro 
+      - t4g.small 
+      - t4g.medium 
+      - t4g.xlarge 
+      - t4g.2xlarge 
+      - m6g.large 
+      - m6g.xlarge 
+      - m6g.2xlarge 
+      - m6g.4xlarge 
+      - m6g.8xlarge 
+      - m6g.16xlarge 
+      - r6g.large 
+      - r6g.xlarge 
+      - r6g.2xlarge 
+      - r6g.4xlarge 
+      - r6g.8xlarge 
+      - r6g.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t3.micro
     Description: The Amazon EC2 instance type that adds data to the file system.
@@ -139,9 +158,14 @@ Parameters:
   Subnet:
     Description: Select existing subnets.
     Type: List<AWS::EC2::Subnet::Id>
-  LatestAmiId :
-    Type : AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+  LatestAmiId:
+    ConstraintDescription: Must be valid AMI Id
+    Description: Select the type of AMI depending upon Intel/AMD x86 architecture or Graviton2 AMR architecture
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    AllowedValues:
+      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-arm64-gp2
+    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
     
 
 Conditions:

@@ -239,10 +239,38 @@ Parameters:
     - r5.4xlarge 
     - r5.8xlarge 
     - r5.16xlarge 
+    - t4g.nano 
+    - t4g.medium 
+    - t4g.micro 
+    - t4g.small 
+    - t4g.medium 
+    - t4g.xlarge 
+    - t4g.2xlarge 
+    - m6g.large 
+    - m6g.xlarge 
+    - m6g.2xlarge 
+    - m6g.4xlarge 
+    - m6g.8xlarge 
+    - m6g.16xlarge 
+    - r6g.large 
+    - r6g.xlarge 
+    - r6g.2xlarge 
+    - r6g.4xlarge 
+    - r6g.8xlarge 
+    - r6g.16xlarge 
+    
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t3.nano
     Description: Bastion EC2 instance type.
     Type: String
+  LatestAmiId:
+    ConstraintDescription: Must be valid AMI Id
+    Description: Select the type of AMI depending upon Intel/AMD x86 architecture or Graviton2 AMR architecture
+    Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
+    AllowedValues:
+      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-arm64-gp2
+    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
   PublicAlbAcmCertificate:
     AllowedPattern: ^$|(arn:aws:acm:)([a-z0-9/:-])*([a-z0-9])$
     Description: '[ Optional ] The AWS Certification Manager certificate ARN for the ALB certificate - this certificate should be created in the region you wish to run the ALB and must reference the domain name you use below.'
@@ -277,6 +305,13 @@ Parameters:
       - db.r5.16xlarge
       - db.t3.medium
       - db.t3.large
+      - db.r6g.large
+      - db.r6g.xlarge
+      - db.r6g.2xlarge
+      - db.r6g.4xlarge
+      - db.r6g.8xlarge
+      - db.r6g.12xlarge
+      - db.r6g.16xlarge
     ConstraintDescription: Must be a valid RDS instance class.
     Default: db.t3.medium
     Description: The Amazon RDS database instance class.
@@ -378,6 +413,25 @@ Parameters:
     - r5.4xlarge 
     - r5.8xlarge 
     - r5.16xlarge 
+    - t4g.nano 
+    - t4g.medium 
+    - t4g.micro 
+    - t4g.small 
+    - t4g.medium 
+    - t4g.xlarge 
+    - t4g.2xlarge 
+    - m6g.large 
+    - m6g.xlarge 
+    - m6g.2xlarge 
+    - m6g.4xlarge 
+    - m6g.8xlarge 
+    - m6g.16xlarge 
+    - r6g.large 
+    - r6g.xlarge 
+    - r6g.2xlarge 
+    - r6g.4xlarge 
+    - r6g.8xlarge 
+    - r6g.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t3.micro
     Description: The Amazon EC2 instance type that adds data to the file system.
@@ -412,6 +466,18 @@ Parameters:
       - cache.r5.2xlarge
       - cache.r5.4xlarge
       - cache.r5.8xlarge
+      - cache.m6g.large
+      - cache.m6g.xlarge
+      - cache.m6g.2xlarge
+      - cache.m6g.4xlarge
+      - cache.m6g.8xlarge
+      - cache.m6g.16xlarge
+      - cache.r6g.large
+      - cache.r6g.xlarge
+      - cache.r6g.2xlarge
+      - cache.r6g.4xlarge
+      - cache.r6g.8xlarge
+      - cache.r6g.16xlarge
     ConstraintDescription: Must be a valid Amazon ElastiCache node type.
     Default: cache.t3.micro
     Description: The Amazon ElastiCache cluster node type.
@@ -560,6 +626,25 @@ Parameters:
       - p3.2xlarge 
       - p3.8xlarge 
       - p3.16xlarge
+      - t4g.nano 
+      - t4g.medium 
+      - t4g.micro 
+      - t4g.small 
+      - t4g.medium 
+      - t4g.xlarge 
+      - t4g.2xlarge 
+      - m6g.large 
+      - m6g.xlarge 
+      - m6g.2xlarge 
+      - m6g.4xlarge 
+      - m6g.8xlarge 
+      - m6g.16xlarge 
+      - r6g.large 
+      - r6g.xlarge 
+      - r6g.2xlarge 
+      - r6g.4xlarge 
+      - r6g.8xlarge 
+      - r6g.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
     Default: t3.medium
     Description: The Amazon EC2 instance type for your web instances.
