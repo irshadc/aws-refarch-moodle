@@ -110,10 +110,10 @@ Parameters:
       - r5.8xlarge 
       - r5.16xlarge 
       - t4g.nano 
-      - t4g.medium 
       - t4g.micro 
       - t4g.small 
       - t4g.medium 
+      - t4g.large 
       - t4g.xlarge 
       - t4g.2xlarge 
       - m6g.large 
@@ -158,14 +158,9 @@ Parameters:
   Subnet:
     Description: Select existing subnets.
     Type: List<AWS::EC2::Subnet::Id>
-  LatestAmiId:
-    ConstraintDescription: Must be valid AMI Id
-    Description: Select the type of AMI depending upon Intel/AMD x86 architecture or Graviton2 AMR architecture
+  LatestAmiId :
     Type: AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>
-    AllowedValues:
-      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
-      - /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-arm64-gp2
-    Default: /aws/service/ami-amazon-linux-latest/amzn-ami-hvm-x86_64-gp2
+    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
     
 
 Conditions:
