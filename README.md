@@ -39,8 +39,8 @@ You can launch this CloudFormation stack, using your account, in the following A
 | eu-central-1 |EU (Frankfurt)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-central-1#/stacks/new?stackName=Moodle&templateURL=https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/00-master.yaml) |
 | ap-southeast-2 |AP (Sydney)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=Moodle&templateURL=https://s3.amazonaws.com/aws-refarch/moodle/latest/templates/00-master.yaml) |
 | ap-south-1 |AP (Mumbai)| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-south-1#/stacks/new?stackName=Moodle&templateURL=https://aws-refarch-irshad.s3.ap-south-1.amazonaws.com/moodle/latest/templates/00-master.yaml) |
+| ap-south-1 |AP (Mumbai) Graviton2| [![cloudformation-launch-stack](images/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-south-1#/stacks/new?stackName=Moodle&templateURL=https://aws-refarch-irshad.s3.ap-south-1.amazonaws.com/moodle/latest/arm-template/00-master.yaml) |
 
-Hello
 ## Architecture
 
 The following sections describe the individual components of the architecture. This architecture borrows liberally from the [WordPress Reference Architecture](https://github.com/awslabs/aws-refarch-wordpress). You may want to review that in addition to the discussion below. 
