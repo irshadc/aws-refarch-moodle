@@ -705,7 +705,7 @@ Resources:
           !Ref DataSubnet4Cidr
         DataSubnet5Cidr:
           !Ref DataSubnet5Cidr
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/01-newvpc.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/01-newvpc.yaml
   securitygroups:
     DependsOn: vpc
     Type: AWS::CloudFormation::Stack
@@ -715,7 +715,7 @@ Resources:
           !Ref SshAccessCidr
         Vpc:
           !GetAtt [ vpc, Outputs.Vpc ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/02-securitygroups.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/02-securitygroups.yaml
   bastion:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -731,7 +731,7 @@ Resources:
           !Ref NumberOfAZs
         Subnet:
           !GetAtt [ vpc, Outputs.PublicSubnet ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-bastion.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/03-bastion.yaml
   publicalb:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -747,7 +747,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.PublicAlbSecurityGroup ]
         Vpc:
           !GetAtt [ vpc, Outputs.Vpc ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-publicalb.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/03-publicalb.yaml
   rds:
     DependsOn: [ securitygroups ]
     Type: AWS::CloudFormation::Stack
@@ -771,7 +771,7 @@ Resources:
           !GetAtt [ vpc, Outputs.DataSubnet ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-rds.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/03-rds.yaml
   efsfilesystem:
     DependsOn: securitygroups
     Type: AWS::CloudFormation::Stack
@@ -795,7 +795,7 @@ Resources:
           !Ref EfsPerformanceMode
         Subnet:
           !GetAtt [ vpc, Outputs.DataSubnet ]
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-efsfilesystem.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/03-efsfilesystem.yaml
   sessioncache:
     Condition: DeployWithSessionCache
     DependsOn: securitygroups
@@ -812,7 +812,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-elasticache.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/03-elasticache.yaml
   applicationcache:
     Condition: DeployApplicationCache
     DependsOn: securitygroups
@@ -829,7 +829,7 @@ Resources:
           !GetAtt [ securitygroups, Outputs.ElastiCacheSecurityGroup ]
         NumberOfSubnets:
           !Ref NumberOfAZs
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/03-elasticache.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/03-elasticache.yaml
   webnocache:
     DependsOn: [ publicalb, rds, efsfilesystem ]
     Condition: DeployWithoutSessionCache
@@ -872,7 +872,7 @@ Resources:
           !Ref MoodleLocale
         ElastiCacheClusterEndpointAddress:
           ''
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/04-web.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/04-web.yaml
   webcached:
     DependsOn: [ publicalb, rds, efsfilesystem, sessioncache ]
     Condition: DeployWithSessionCache
@@ -915,7 +915,7 @@ Resources:
           !Ref MoodleLocale
         ElastiCacheClusterEndpointAddress:
           !GetAtt sessioncache.Outputs.ElastiCacheClusterEndpointAddress
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/04-web.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/04-web.yaml
   cloudfront:
     Condition: DeployCloudFront
     DependsOn: publicalb    
@@ -928,7 +928,7 @@ Resources:
           !GetAtt [ publicalb, Outputs.PublicAlbDnsName ]
         DomainName:
           !Ref DomainName
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/04-cloudfront.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/04-cloudfront.yaml
   route53:
     Condition: DeployRoute53
     DependsOn: publicalb
@@ -943,7 +943,7 @@ Resources:
           !Ref HostedZoneName
         DomainName:
           !Ref DomainName
-      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/templates/05-route53.yaml
+      TemplateURL: https://s3.amazonaws.com/aws-refarch-irshad/moodle/latest/arm-template/05-route53.yaml
       
 Outputs:
   DnsName:
