@@ -156,7 +156,7 @@ Parameters:
     Type: String
   WebInstanceType:
     AllowedValues:
-    - t2.nano 
+      - t2.nano 
       - t2.micro 
       - t2.small 
       - t2.medium 
@@ -658,7 +658,7 @@ Resources:
             /tmp/install_moodle.sh:
               content:  !Sub |
                 #!/bin/bash -xe
-                wget -O /tmp/moodle.tgz https://download.moodle.org/download.php/direct/stable38/moodle-3.8.3.tgz
+                wget -O /tmp/moodle.tgz https://download.moodle.org/download.php/direct/stable310/moodle-3.10.3.tgz
                 tar -xvzf /tmp/moodle.tgz --strip-components=1 -C /var/www/moodle/html/
                 wget -O /var/www/moodle/html/lib/aws.phar https://docs.aws.amazon.com/aws-sdk-php/v3/download/aws.phar
                 cp /tmp/config.php /var/www/moodle/html/config.php
@@ -757,6 +757,11 @@ Resources:
             #!/bin/bash -xe
             yum update -y
             
+            sudo systemctl enable amazon-ssm-agent
+            sudo systemctl start amazon-ssm-agent
+            sudo systemctl status amazon-ssm-agent
+            
+            
             #Create directory structure
             mkdir -p /var/www/moodle/html
             mkdir -p /var/www/moodle/data
@@ -764,10 +769,12 @@ Resources:
             mkdir -p /var/www/moodle/temp
             mkdir -p /var/www/moodle/local
             
+            
+            
             #Mount shared storage
             mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 ${ElasticFileSystem}.efs.${AWS::Region}.amazonaws.com:/data /var/www/moodle/data
-            mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 ${ElasticFileSystem}.efs.${AWS::Region}.amazonaws.com:/cache /var/www/moodle/cache
-            mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 ${ElasticFileSystem}.efs.${AWS::Region}.amazonaws.com:/temp /var/www/moodle/temp
+            #mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 ${ElasticFileSystem}.efs.${AWS::Region}.amazonaws.com:/cache /var/www/moodle/cache
+            #mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2 ${ElasticFileSystem}.efs.${AWS::Region}.amazonaws.com:/temp /var/www/moodle/temp
             
             #Run CloudFormation Init Scripts
             /opt/aws/bin/cfn-init --configsets deploy_webserver --verbose --stack ${AWS::StackName} --resource WebLaunchConfiguration --region ${AWS::Region}

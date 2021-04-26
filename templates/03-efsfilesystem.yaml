@@ -438,6 +438,7 @@ Resources:
       KeyName: !Ref EC2KeyName
       SecurityGroups:
       - !Ref SecurityGroup
+      
       UserData:
         "Fn::Base64":
           !Join [
@@ -450,6 +451,9 @@ Resources:
             "- yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm\n",
             "- yum-config-manager --enable epel\n",
             "- yum install -y parallel",
+            "- sudo systemctl enable amazon-ssm-agent",
+            "- sudo systemctl start amazon-ssm-agent",
+            "- sudo systemctl status amazon-ssm-agent",
             "- ntpstat\n",
             "- /opt/aws/bin/cfn-init --configsets efs_add_storage --verbose --stack ", !Ref 'AWS::StackName', " --resource LaunchConfiguration --region ", !Ref 'AWS::Region',"\n",
             "- /tmp/efs-add-storage.sh ", !Ref ElasticFileSystem, " throughput_data ", !Ref Growth,"\n",
