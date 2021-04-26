@@ -209,7 +209,7 @@ Parameters:
     - r6g.16xlarge 
     
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t3.nano
+    Default: t4g.nano
     Description: Bastion EC2 instance type.
     Type: String
   LatestAmiId :
@@ -329,7 +329,7 @@ Parameters:
     - r6g.8xlarge 
     - r6g.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t3.micro
+    Default: t4g.micro
     Description: The Amazon EC2 instance type that adds data to the file system.
     Type: String
   UseSessionCacheBoolean:
@@ -466,7 +466,7 @@ Parameters:
       - r6g.8xlarge 
       - r6g.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t3.medium
+    Default: t4g.large
     Description: The Amazon EC2 instance type for your web instances.
     Type: String
   HostedZoneName:

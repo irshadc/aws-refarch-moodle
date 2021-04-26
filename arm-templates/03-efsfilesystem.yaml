@@ -81,7 +81,7 @@ Parameters:
       - r6g.8xlarge 
       - r6g.16xlarge 
     ConstraintDescription: Must be a valid Amazon EC2 instance type.
-    Default: t3.micro
+    Default: t4g.micro
     Description: The Amazon EC2 instance type that adds data to the file system.
     Type: String
   EC2KeyName:
