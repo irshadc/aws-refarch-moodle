@@ -788,6 +788,13 @@ Resources:
             mkdir -p /var/www/moodle/temp
             mkdir -p /var/www/moodle/local
             
+            #Setting up access ownership to apache:apache
+            chown apache:apache /var/www/moodle/html
+            chown apache:apache /var/www/moodle/data
+            chown apache:apache /var/www/moodle/cache
+            chown apache:apache /var/www/moodle/temp
+            chown apache:apache /var/www/moodle/local
+            
             
             
             #Mount shared storage
